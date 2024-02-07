@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alphabet Learning</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('your_background_image_url_here.jpg'); /* Replace 'your_background_image_url_here.jpg' with the URL of your background image */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      padding: 20px;
+    }
+    .letter-container {
+      display: inline-block;
+      width: 100px;
+      height: 120px;
+      margin: 10px;
+      text-align: center;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+    .letter {
+      font-size: 36px;
+    }
+    .speaker-btn {
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="lettersContainer"></div>
+
+<script>
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const lettersContainer = document.getElementById('lettersContainer');
+  let pageCounter = 1;
+  let letterCounter = 0;
+
+  alphabet.forEach(letter => {
+    if (letterCounter % 5 === 0) {
+      if (letterCounter !== 0) {
+        pageCounter++;
+      }
+      lettersContainer.innerHTML += `<div id="page${pageCounter}" class="page"></div>`;
+    }
+    const page = document.getElementById(`page${pageCounter}`);
+
+    const letterContainer = document.createElement('div');
+    letterContainer.classList.add('letter-container');
+
+    const letterElement = document.createElement('div');
+    letterElement.classList.add('letter');
+    letterElement.textContent = letter.toUpperCase();
+
+    const speakerButton = document.createElement('button');
+    speakerButton.classList.add('speaker-btn');
+    speakerButton.textContent = '🔊';
+    speakerButton.addEventListener('click', () => {
+      speak(letter);
+    });
+
+    letterContainer.appendChild(letterElement);
+    letterContainer.appendChild(speakerButton);
+    page.appendChild(letterContainer);
+
+    letterCounter++;
+  });
+
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  }
+</script>
+
+</body>
+</html>
